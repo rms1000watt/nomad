@@ -4,11 +4,14 @@ datacenter = "dc-1"
 
 server {
     enabled          = true
-    bootstrap_expect = 1
+    bootstrap_expect = 2
+
+    
+    retry_join = ["${NOMAD_SERVER_ADDRESS_1}"]
 }
 
 ports {
-  http = 4646
-  rpc  = 4647
-  serf = 4648
+  http = ${NOMAD_SERVER_HTTP_PORT}
+  rpc  = ${NOMAD_SERVER_RPC_PORT}
+  serf = ${NOMAD_SERVER_SERF_PORT}
 }
