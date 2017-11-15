@@ -35,13 +35,52 @@ services:
     depends_on:
     - nomad-server-1
 
+  nomad-server-3:
+    container_name: nomad-server-3
+    command: /bin/nomad agent -config=/server.hcl
+    environment:
+      NOMAD_SERVER_HTTP_PORT: 6646
+      NOMAD_SERVER_RPC_PORT: 6647
+      NOMAD_SERVER_SERF_PORT: 6648
+      NOMAD_SERVER_ADDRESS_1: nomad-server-1:4648
+    image: rms1000watt/nomad:latest
+    ports:
+      - 6646:6646
+      - 6647:6647
+      - 6648:6648
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./server.hcl.tpl:/server.hcl.tpl
+    depends_on:
+    - nomad-server-1
+
   nomad-client-1:
     container_name: nomad-client-1
+    command: /bin/nomad agent -config=/client.hcl
+    environment:
+      NOMAD_CLIENT_HTTP_PORT: 4656
+      NOMAD_SERVER_ADDRESS_1: nomad-server-1:4647
+      NOMAD_SERVER_ADDRESS_2: nomad-server-2:5647
+      NOMAD_SERVER_ADDRESS_3: nomad-server-3:6647
+    image: rms1000watt/nomad:latest
+    ports:
+      - 4656:4656
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./client.hcl.tpl:/client.hcl.tpl
+    depends_on:
+    - nomad-server-1
+    - nomad-server-2
+    - nomad-server-3
+
+  nomad-client-2:
+    container_name: nomad-client-2
     command: /bin/nomad agent -config=/client.hcl
     environment:
       NOMAD_CLIENT_HTTP_PORT: 5656
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4647
       NOMAD_SERVER_ADDRESS_2: nomad-server-2:5647
+      NOMAD_SERVER_ADDRESS_3: nomad-server-3:6647
     image: rms1000watt/nomad:latest
     ports:
       - 5656:5656
@@ -51,21 +90,24 @@ services:
     depends_on:
     - nomad-server-1
     - nomad-server-2
+    - nomad-server-3
 
-  nomad-client-2:
-    container_name: nomad-client-2
+  nomad-client-3:
+    container_name: nomad-client-3
     command: /bin/nomad agent -config=/client.hcl
     environment:
-      NOMAD_CLIENT_HTTP_PORT: 6666
+      NOMAD_CLIENT_HTTP_PORT: 6656
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4647
       NOMAD_SERVER_ADDRESS_2: nomad-server-2:5647
+      NOMAD_SERVER_ADDRESS_3: nomad-server-3:6647
     image: rms1000watt/nomad:latest
     ports:
-      - 6666:6666
+      - 6656:6656
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./client.hcl.tpl:/client.hcl.tpl
     depends_on:
     - nomad-server-1
     - nomad-server-2
+    - nomad-server-3
     

@@ -4,7 +4,7 @@
 
 This is a Dockerized Nomad forked from: [https://github.com/djenriquez/nomad](https://github.com/djenriquez/nomad)
 
-This also contains a 2 server & 2 client docker-compose example
+This also contains a 3 server & 3 client docker-compose example
 
 ## Contents
 
