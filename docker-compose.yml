@@ -7,6 +7,8 @@ services:
       NOMAD_SERVER_HTTP_PORT: 4646
       NOMAD_SERVER_RPC_PORT: 4647
       NOMAD_SERVER_SERF_PORT: 4648
+      NOMAD_SERVER_ADDRESS_2: nomad-server-1:5648
+      NOMAD_SERVER_ADDRESS_3: nomad-server-3:6648
     image: rms1000watt/nomad:latest
     ports:
       - 4646:4646
@@ -24,6 +26,7 @@ services:
       NOMAD_SERVER_RPC_PORT: 5647
       NOMAD_SERVER_SERF_PORT: 5648
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4648
+      NOMAD_SERVER_ADDRESS_3: nomad-server-3:6648
     image: rms1000watt/nomad:latest
     ports:
       - 5646:5646
@@ -43,6 +46,7 @@ services:
       NOMAD_SERVER_RPC_PORT: 6647
       NOMAD_SERVER_SERF_PORT: 6648
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4648
+      NOMAD_SERVER_ADDRESS_2: nomad-server-2:5648
     image: rms1000watt/nomad:latest
     ports:
       - 6646:6646
