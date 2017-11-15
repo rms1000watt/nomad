@@ -23,11 +23,15 @@ See `client.hcl.tpl` and `docker-compose.yml` for the inclusion of `NOMAD_CLIENT
 
 ## Build
 
+The docker image is in the Docker Hub already, so you don't have to build anything. But, if you want to, run:
+
 ```bash
 make
 ```
 
 ## Example
+
+Start a 3x3 Nomad Cluster:
 
 ```bash
 docker-compose up -d
