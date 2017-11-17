@@ -1,13 +1,15 @@
 log_level  = "DEBUG"
-data_dir   = "/nomad/data"
+data_dir   = "${NOMAD_DATA_DIR}"
 datacenter = "dc-1"
 
 client {
     enabled = true
     servers = ["${NOMAD_SERVER_ADDRESS_1}", "${NOMAD_SERVER_ADDRESS_2}", "${NOMAD_SERVER_ADDRESS_3}"]
+    options {
+        "docker.privileged.enabled" = "true"
+    }
 }
 
-# This only works because of envsubst in start.sh
 ports {
     http = ${NOMAD_CLIENT_HTTP_PORT}
 }

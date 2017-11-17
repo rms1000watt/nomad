@@ -9,6 +9,7 @@ services:
       NOMAD_SERVER_SERF_PORT: 4648
       NOMAD_SERVER_ADDRESS_2: nomad-server-1:5648
       NOMAD_SERVER_ADDRESS_3: nomad-server-3:6648
+      NOMAD_DATA_DIR: /tmp/nomad/data/s1
     image: rms1000watt/nomad:latest
     ports:
       - 4646:4646
@@ -17,6 +18,7 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./server.hcl.tpl:/server.hcl.tpl
+    - /tmp:/tmp
 
   nomad-server-2:
     container_name: nomad-server-2
@@ -27,6 +29,7 @@ services:
       NOMAD_SERVER_SERF_PORT: 5648
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4648
       NOMAD_SERVER_ADDRESS_3: nomad-server-3:6648
+      NOMAD_DATA_DIR: /tmp/nomad/data/s2
     image: rms1000watt/nomad:latest
     ports:
       - 5646:5646
@@ -35,6 +38,7 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./server.hcl.tpl:/server.hcl.tpl
+    - /tmp:/tmp
     depends_on:
     - nomad-server-1
 
@@ -47,6 +51,7 @@ services:
       NOMAD_SERVER_SERF_PORT: 6648
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4648
       NOMAD_SERVER_ADDRESS_2: nomad-server-2:5648
+      NOMAD_DATA_DIR: /tmp/nomad/data/s3
     image: rms1000watt/nomad:latest
     ports:
       - 6646:6646
@@ -55,6 +60,7 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./server.hcl.tpl:/server.hcl.tpl
+    - /tmp:/tmp
     depends_on:
     - nomad-server-1
 
@@ -66,12 +72,15 @@ services:
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4647
       NOMAD_SERVER_ADDRESS_2: nomad-server-2:5647
       NOMAD_SERVER_ADDRESS_3: nomad-server-3:6647
+      NOMAD_DATA_DIR: /tmp/nomad/data/c1
     image: rms1000watt/nomad:latest
+    privileged: true
     ports:
       - 4656:4656
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./client.hcl.tpl:/client.hcl.tpl
+    - /tmp:/tmp
     depends_on:
     - nomad-server-1
     - nomad-server-2
@@ -85,12 +94,15 @@ services:
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4647
       NOMAD_SERVER_ADDRESS_2: nomad-server-2:5647
       NOMAD_SERVER_ADDRESS_3: nomad-server-3:6647
+      NOMAD_DATA_DIR: /tmp/nomad/data/c2
     image: rms1000watt/nomad:latest
+    privileged: true
     ports:
       - 5656:5656
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./client.hcl.tpl:/client.hcl.tpl
+    - /tmp:/tmp
     depends_on:
     - nomad-server-1
     - nomad-server-2
@@ -104,12 +116,15 @@ services:
       NOMAD_SERVER_ADDRESS_1: nomad-server-1:4647
       NOMAD_SERVER_ADDRESS_2: nomad-server-2:5647
       NOMAD_SERVER_ADDRESS_3: nomad-server-3:6647
+      NOMAD_DATA_DIR: /tmp/nomad/data/c3
     image: rms1000watt/nomad:latest
+    privileged: true
     ports:
       - 6656:6656
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ./client.hcl.tpl:/client.hcl.tpl
+    - /tmp:/tmp
     depends_on:
     - nomad-server-1
     - nomad-server-2

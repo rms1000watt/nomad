@@ -1,5 +1,5 @@
 log_level  = "DEBUG"
-data_dir   = "/nomad/data"
+data_dir   = "${NOMAD_DATA_DIR}"
 datacenter = "dc-1"
 
 server {
